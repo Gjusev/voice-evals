@@ -5,7 +5,14 @@ barge-in behavior and judge-based task outcomes, with CI gates.
 """
 
 from .evaluate import evaluate
-from .types import CallRecord, Interruption, Scenario, StageTimings, VoiceEvalResult
+from .types import (
+    CallRecord,
+    Interruption,
+    Scenario,
+    StageTimings,
+    VoiceEvalResult,
+    load_dataset,
+)
 
 __version__ = "0.1.0"
 
@@ -17,4 +24,5 @@ __all__ = [
     "VoiceEvalResult",
     "__version__",
     "evaluate",
+    "load_dataset",
 ]
