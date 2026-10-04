@@ -4,7 +4,7 @@
 
 The Python, Kaggle, PyPI, ElevenLabs and GitHub SVGs are sourced from [Simple Icons](https://simpleicons.org/) via `https://cdn.simpleicons.org/{slug}/8BE0B1`. They identify relevant technologies and do not imply endorsement. Brand marks remain subject to their owners' trademark guidelines; see [Simple Icons' disclaimer](https://github.com/simple-icons/simple-icons#disclaimer).
 
-The generated English campaign images are included in [`social/`](social/): [GitHub social preview](social/github-social-preview.png), [LinkedIn launch image](social/linkedin-launch.png) and [DEV article cover](social/devto-cover.png). The social preview is ready to upload in repository settings; committing it does not change that setting. Publication drafts remain local under the ignored `out/launch-kit/` directory. Logo SVGs use a graphite background for readable contrast in GitHub's light and dark themes.
+The generated English campaign images are included in [`social/`](social/): [GitHub social preview](social/github-social-preview.jpg), [LinkedIn launch image](social/linkedin-launch.png) and [DEV article cover](social/devto-cover.png). The social preview is ready to upload in repository settings; committing it does not change that setting. Publication drafts remain local under the ignored `out/launch-kit/` directory. Logo SVGs use a graphite background for readable contrast in GitHub's light and dark themes.
 
 ## Workflow diagram
 
