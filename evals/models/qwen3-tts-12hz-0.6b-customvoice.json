@@ -4,18 +4,25 @@
   "model": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
   "model_revision": null,
   "license": "Apache-2.0",
-  "languages": ["en", "de", "es"],
+  "languages": [
+    "en",
+    "de",
+    "es"
+  ],
   "voice": null,
   "server": null,
   "server_digest": null,
   "quantization": null,
-  "settings": {"sample_rate": 16000, "encoding": "pcm_s16le"},
+  "settings": {
+    "sample_rate": 16000,
+    "encoding": "pcm_s16le"
+  },
   "caller_config": {
     "kind": "http",
     "model_id": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
     "url_env": "CALLER_TTS_URL"
   },
-  "status": "tested-offline",
-  "status_note": "HTTP contract verified via httpx.MockTransport in tests/test_callers.py; live synthesis requires an externally hosted service speaking the documented contract and was NOT executed here. Pin model_revision/server/voice/quantization when deployed; null means unknown, not implied.",
+  "status": "blocked-bf16-hardware",
+  "status_note": "Attempted 2026-10-04 on Kaggle: the model requires bfloat16; float16 on T4 dies with a CUDA device-side assert during generation, and device_map=cpu does not help because the qwen-tts package moves its code predictor to CUDA internally. Kaggle GPU shapes (T4/P100) and the local GTX 1080 are all pre-Ampere without bf16. German clips (Qwen3-TTS covers de) stay pending bf16 hardware (RTX 30xx+/A100/cloud).",
   "provenance": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
 }

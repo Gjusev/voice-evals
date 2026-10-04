@@ -4,9 +4,15 @@
   "model": "hexgrad/Kokoro-82M",
   "model_revision": null,
   "license": "Apache-2.0 (weights)",
-  "languages": ["en"],
+  "languages": [
+    "en"
+  ],
   "server": null,
-  "status": "pending",
-  "status_note": "Practical source for pregenerated speech fixtures during bundle preparation. Its inference and system dependencies stay outside this harness; no inference was run here.",
-  "provenance": "https://huggingface.co/hexgrad/Kokoro-82M"
+  "status": "generated",
+  "status_note": "Clips generated 2026-10-04 locally on CPU float32 (kokoro 0.9.4 --no-deps + modern transformers/misaki; the pinned transformers==4.12.2 dep has no Python 3.13 wheels). English (af_heart) and Spanish (ef_dora) at native 24 kHz; no resampling. Kokoro has no German voice. Manifest: evals/fixtures/audio/open-models/manifest.json.",
+  "provenance": "https://huggingface.co/hexgrad/Kokoro-82M",
+  "voices_used": {
+    "en": "af_heart",
+    "es": "ef_dora"
+  }
 }

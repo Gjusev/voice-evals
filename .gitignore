@@ -13,3 +13,4 @@ out/
 .DS_Store
 .playwright-mcp/
 .venv-bundlecheck/
+.venv-clips/

@@ -1,0 +1,107 @@
+{
+  "format": {
+    "encoding": "pcm_s16le",
+    "sample_rate": 24000,
+    "channels": 1,
+    "sample_width": 2
+  },
+  "note": "open-model fixtures (Kokoro-82M, CPU float32, generated locally). German is pending: Kokoro has no German voice and Qwen3-TTS (covers de) requires bf16 hardware (device-side assert on Kaggle T4 fp16; package forces CUDA on cpu).",
+  "skipped": [],
+  "clips": [
+    {
+      "text": "I'd like to book an appointment for Tuesday.",
+      "file": "en-request.wav",
+      "sha256": "0a9613952b1993b4734bf2bd67aa3cf360b733d30d7f8ca8b6b1f5cc7456511e",
+      "language": "en",
+      "provenance": {
+        "engine": "kokoro",
+        "model": "hexgrad/Kokoro-82M",
+        "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+        "package": "kokoro==0.9.4 (--no-deps) + modern transformers/misaki",
+        "voice": "af_heart",
+        "native_sample_rate": 24000,
+        "resampled_to_16000": false,
+        "compute_dtype": "float32-cpu",
+        "license": "Apache-2.0",
+        "generated_utc": "2026-10-04T19:32:17+00:00",
+        "reviewed_by": "pending-human-review"
+      }
+    },
+    {
+      "text": "My name is Alex Morgan.",
+      "file": "en-name.wav",
+      "sha256": "d1ebaa33cdeb0d3191458978c05fc8fe39327cd8f874135dac2548c89860d472",
+      "language": "en",
+      "provenance": {
+        "engine": "kokoro",
+        "model": "hexgrad/Kokoro-82M",
+        "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+        "package": "kokoro==0.9.4 (--no-deps) + modern transformers/misaki",
+        "voice": "af_heart",
+        "native_sample_rate": 24000,
+        "resampled_to_16000": false,
+        "compute_dtype": "float32-cpu",
+        "license": "Apache-2.0",
+        "generated_utc": "2026-10-04T19:32:17+00:00",
+        "reviewed_by": "pending-human-review"
+      }
+    },
+    {
+      "text": "Sorry, could we make that 11:00 instead?",
+      "file": "en-correct.wav",
+      "sha256": "8ca913a3da2ce78eb8ab61a44fa92eaa4f1dc62b019acbb20d2c2ee29b90e8a1",
+      "language": "en",
+      "provenance": {
+        "engine": "kokoro",
+        "model": "hexgrad/Kokoro-82M",
+        "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+        "package": "kokoro==0.9.4 (--no-deps) + modern transformers/misaki",
+        "voice": "af_heart",
+        "native_sample_rate": 24000,
+        "resampled_to_16000": false,
+        "compute_dtype": "float32-cpu",
+        "license": "Apache-2.0",
+        "generated_utc": "2026-10-04T19:32:18+00:00",
+        "reviewed_by": "pending-human-review"
+      }
+    },
+    {
+      "text": "Quisiera reservar una cita el martes.",
+      "file": "es-request.wav",
+      "sha256": "9c26fb3ea7d22f70fc2f44a8ab1a03ad6accb4965d160e4cbdc2c5b2b744c7be",
+      "language": "es",
+      "provenance": {
+        "engine": "kokoro",
+        "model": "hexgrad/Kokoro-82M",
+        "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+        "package": "kokoro==0.9.4 (--no-deps) + modern transformers/misaki",
+        "voice": "ef_dora",
+        "native_sample_rate": 24000,
+        "resampled_to_16000": false,
+        "compute_dtype": "float32-cpu",
+        "license": "Apache-2.0",
+        "generated_utc": "2026-10-04T19:32:20+00:00",
+        "reviewed_by": "pending-human-review"
+      }
+    },
+    {
+      "text": "Me llamo Alex Morgan.",
+      "file": "es-name.wav",
+      "sha256": "522ae95be6bf3f4f3b7a204fb239977213731d54c085f8cfd1a78bbb536899f3",
+      "language": "es",
+      "provenance": {
+        "engine": "kokoro",
+        "model": "hexgrad/Kokoro-82M",
+        "revision": "f3ff3571791e39611d31c381e3a41a3af07b4987",
+        "package": "kokoro==0.9.4 (--no-deps) + modern transformers/misaki",
+        "voice": "ef_dora",
+        "native_sample_rate": 24000,
+        "resampled_to_16000": false,
+        "compute_dtype": "float32-cpu",
+        "license": "Apache-2.0",
+        "generated_utc": "2026-10-04T19:32:21+00:00",
+        "reviewed_by": "pending-human-review"
+      }
+    }
+  ]
+}
