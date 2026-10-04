@@ -10,7 +10,9 @@ The generated English campaign images are included in [`social/`](social/): [Git
 
 `voice-evals-demo.mp4` is a 22-second, 1280 × 720, 30 fps H.264/AAC launch film authored with [brag](https://github.com/latent-spaces/brag) and [Hyperframes](https://github.com/heygen-com/hyperframes). The GIF is a silent 800-pixel-wide preview. The poster is the settled end card at 20 seconds, also baked into frame zero of the MP4.
 
-The README uses a GitHub attachment URL on its own paragraph for native video playback. Anonymous rendering and the resulting video download were verified against the local MP4 using SHA-256. Keep that URL as a standalone paragraph; the repository MP4, silent GIF and transcript provide alternatives.
+The README embeds the looping GIF as its primary demo so it animates without a play click. This follows the image embed pattern used by [VHS](https://github.com/charmbracelet/vhs). GitHub's [animation accessibility preferences](https://docs.github.com/en/account-and-profile/how-tos/account-settings/managing-accessibility-settings) can disable automatic animation for an individual viewer.
+
+An expandable section retains the GitHub attachment URL on its own paragraph for full-quality video with sound. That player requires a play click. Anonymous rendering and the resulting video download were verified against the local MP4 using SHA-256. Keep the attachment URL as a standalone paragraph; the repository MP4 and transcript provide alternatives.
 
 - Music: [Happy Beats & Business Moves Vol. 12 by Sascha Ende](https://ende.app/en/song/12881-happy-), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Changes: excerpted to 22 seconds, lowered in volume and faded at both ends. Source bundled by brag; [track and license details](https://ende.app/standard-license).
 - Soft reveal sound: Kenney `interface/drop_001.ogg`, from [brag's bundled sound library](https://github.com/latent-spaces/brag/tree/main/skills/brag/assets/sfx). [Kenney interface sounds](https://kenney.nl/assets/interface-sounds), CC0.

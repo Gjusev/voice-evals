@@ -19,11 +19,18 @@ A voice agent can produce the right words and still respond too slowly, talk ove
 
 ## Watch the demo
 
+![Animated 22-second voice-evals demo showing replay scoring, CI gates and recording artifacts.](docs/assets/voice-evals-demo.gif)
+
+The demo loops automatically without sound. Demonstration scores come from synthetic calls. [Transcript](docs/demo-transcript.md) · [Download MP4 with sound](docs/assets/voice-evals-demo.mp4) · [Media credits](docs/assets/README.md#video-credits).
+
+<details>
+<summary>Play the full-quality video with sound</summary>
+
 https://github.com/user-attachments/assets/3b67eb82-26ce-4247-b652-b0f5b7513b20
 
-**[Download MP4](docs/assets/voice-evals-demo.mp4)** · [Silent animated preview](docs/assets/voice-evals-demo.gif) · [Transcript](docs/demo-transcript.md)
+Press play and enable sound for the music.
 
-A 22-second walkthrough of the CLI and recording artifacts, playable directly here on GitHub. Enable sound for the music. Demonstration scores come from synthetic calls. [Media credits](docs/assets/README.md#video-credits).
+</details>
 
 ## Choose your starting point
 
