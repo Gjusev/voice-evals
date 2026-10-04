@@ -63,7 +63,7 @@ class CallRecord:
     interruptions: list[Interruption] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, row: dict[str, Any]) -> "CallRecord":
+    def from_dict(cls, row: dict[str, Any]) -> CallRecord:
         try:
             scenario = Scenario(
                 name=str(row["scenario"]["name"]),

@@ -15,6 +15,6 @@ __all__ = [
     "Scenario",
     "StageTimings",
     "VoiceEvalResult",
-    "evaluate",
     "__version__",
+    "evaluate",
 ]
