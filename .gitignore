@@ -8,4 +8,6 @@ build/
 .ruff_cache/
 *.json.baseline
 results/
+out/
+.venv-verify/
 .DS_Store

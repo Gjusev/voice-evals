@@ -1,0 +1,856 @@
+{
+ "name": "trace-barge-in-ignored",
+ "note": "normalized trace from a MockTransport session with a virtual clock; simulated latencies, not provider measurements",
+ "session_status": "completed",
+ "status_reason": null,
+ "events": [
+  {
+   "kind": "session_ready",
+   "receipt_ns": -27000000,
+   "response_id": null,
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "caller_transcript_final",
+   "receipt_ns": 2917000000,
+   "response_id": null,
+   "utterance_id": "utt-request",
+   "text": "Could I arrange a Tuesday appointment?",
+   "audio_samples": null
+  },
+  {
+   "kind": "response_start",
+   "receipt_ns": 3517000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_delta",
+   "receipt_ns": 3517000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": "Of course, I'd be happy to help you",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_final",
+   "receipt_ns": 3517000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": "Of course, I'd be happy to help you book an appointment. May I have your name, please?",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 3605000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 3725000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 3845000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 3965000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4085000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4205000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4325000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4445000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4565000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4685000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4805000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 4925000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "response_done",
+   "receipt_ns": 5045000000,
+   "response_id": "mock-r1",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "caller_transcript_final",
+   "receipt_ns": 7267000000,
+   "response_id": null,
+   "utterance_id": "utt-provide_name",
+   "text": "My name is Alex Morgan.",
+   "audio_samples": null
+  },
+  {
+   "kind": "response_start",
+   "receipt_ns": 7867000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_delta",
+   "receipt_ns": 7867000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": "Thank you. I have availability on Tuesday. I can offer you 10:00 in the morning, which is our first opening. Would 10:00 work for",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_final",
+   "receipt_ns": 7867000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": "Thank you. I have availability on Tuesday. I can offer you 10:00 in the morning, which is our first opening. Would 10:00 work for you? I also have later slots on Wednesday if that would suit you better, but Tuesday morning at 10:00 is the closest to your request.",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 7955000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8075000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8195000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8315000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8435000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8555000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8675000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8795000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 8915000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9035000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9155000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9275000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9395000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9515000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9635000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9755000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9875000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 9995000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10115000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10235000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10355000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10475000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10595000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10715000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10835000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 10955000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "caller_transcript_final",
+   "receipt_ns": 11017000000,
+   "response_id": null,
+   "utterance_id": "utt-correct_time",
+   "text": "Sorry, could we make that 11:00 instead?",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11095000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11255000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11415000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11575000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "response_start",
+   "receipt_ns": 11617000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_delta",
+   "receipt_ns": 11617000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": "I'm sorry for the confusion. Let me correct that right away: I will",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_final",
+   "receipt_ns": 11617000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": "I'm sorry for the confusion. Let me correct that right away: I will update your appointment to 11:00 instead of 10:00. Tuesday at 11:00 it is.",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11705000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11705000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11825000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11825000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11945000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 11945000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12065000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12065000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12185000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12185000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12305000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12305000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12425000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12425000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12545000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12545000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12665000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12665000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12785000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12785000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12905000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 12905000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13025000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13025000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13145000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "response_done",
+   "receipt_ns": 13145000000,
+   "response_id": "mock-r3",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13265000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13385000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13505000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13625000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13745000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 13865000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "response_done",
+   "receipt_ns": 13985000000,
+   "response_id": "mock-r2",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "caller_transcript_final",
+   "receipt_ns": 18127000000,
+   "response_id": null,
+   "utterance_id": "utt-confirm",
+   "text": "Yes, please confirm the Tuesday appointment at 11:00 for Alex Morgan.",
+   "audio_samples": null
+  },
+  {
+   "kind": "response_start",
+   "receipt_ns": 18727000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_delta",
+   "receipt_ns": 18727000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": "Perfect. Your appointment is confirmed for Tuesday at 11:00 for Alex Morgan. You",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_text_final",
+   "receipt_ns": 18727000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": "Perfect. Your appointment is confirmed for Tuesday at 11:00 for Alex Morgan. You will receive a confirmation shortly. Is there anything else I can help you with?",
+   "audio_samples": null
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 18815000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 18935000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19055000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19175000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19295000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19415000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19535000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19655000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19775000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 19895000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 20015000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "agent_audio",
+   "receipt_ns": 20135000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": 1280
+  },
+  {
+   "kind": "response_done",
+   "receipt_ns": 20255000000,
+   "response_id": "mock-r4",
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  }
+ ]
+}

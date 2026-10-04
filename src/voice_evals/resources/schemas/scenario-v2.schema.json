@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:voice-evals:scenario:2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "name", "expected_outcome", "steps", "outcome_rule"],
+  "properties": {
+    "schema_version": {"const": 2},
+    "name": {"type": "string", "minLength": 1},
+    "expected_outcome": {"type": "string", "minLength": 1},
+    "required_facts": {"$ref": "#/$defs/strings"},
+    "forbidden_facts": {"$ref": "#/$defs/strings"},
+    "seed": {"type": "integer", "minimum": 0, "maximum": 4294967295},
+    "facts": {"type": "object", "additionalProperties": {"type": "string"}},
+    "steps": {"type": "array", "minItems": 1, "maxItems": 100, "items": {"$ref": "#/$defs/step"}},
+    "outcome_rule": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["source"],
+          "properties": {"source": {"const": "transport"}}
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["source", "after_step", "all_of", "value"],
+          "properties": {
+            "source": {"const": "final_agent_text"},
+            "after_step": {"type": "string", "minLength": 1},
+            "all_of": {"$ref": "#/$defs/nonempty_strings"},
+            "value": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "cue": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {"mode": {"const": "speak_now"}}
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["mode", "response_to", "timeout_ms"],
+          "properties": {
+            "mode": {"const": "wait_agent_end"},
+            "response_to": {"type": "string", "minLength": 1},
+            "timeout_ms": {"type": "integer", "minimum": 1}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["mode", "response_to", "after_ms", "timeout_ms", "if_missed"],
+          "properties": {
+            "mode": {"const": "interrupt"},
+            "response_to": {"type": "string", "minLength": 1},
+            "after_ms": {"type": "integer", "minimum": 0},
+            "timeout_ms": {"type": "integer", "minimum": 1},
+            "if_missed": {"enum": ["fail", "skip"]}
+          }
+        }
+      ]
+    },
+    "condition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["response_to", "any_text"],
+      "properties": {
+        "response_to": {"type": "string", "minLength": 1},
+        "any_text": {"$ref": "#/$defs/nonempty_strings"}
+      }
+    },
+    "utterance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1},
+        "alternatives": {"$ref": "#/$defs/strings"},
+        "reveals": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "step": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "intent", "cue", "utterance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "intent": {"type": "string", "minLength": 1},
+        "cue": {"$ref": "#/$defs/cue"},
+        "when": {"$ref": "#/$defs/condition"},
+        "on_unmatched": {"enum": ["fail", "skip"]},
+        "utterance": {"$ref": "#/$defs/utterance"}
+      },
+      "dependentRequired": {"when": ["on_unmatched"], "on_unmatched": ["when"]}
+    }
+  }
+}

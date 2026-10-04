@@ -16,7 +16,9 @@ jobs:
       - uses: astral-sh/setup-uv@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: uv sync
-      - run: uv run ruff check src tests
-      - run: uv run pytest -q
+      - run: uv sync --extra probe
+      - run: uv run ruff check src tests scripts kaggle-kernel examples
+      # Fully offline: live tests are marker-gated AND hard-blocked under CI.
+      - run: uv run pytest -q -m "not live"
       - run: uv run voice-eval run evals/data/demo_calls.jsonl --max-wer 0.05 --min-task-completion 0.5
+      - run: uv run voice-eval run evals/data/replay_v02.jsonl --max-wer 0.7

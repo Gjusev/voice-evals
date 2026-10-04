@@ -1,0 +1,61 @@
+{
+  "format": {
+    "encoding": "pcm_s16le",
+    "sample_rate": 16000,
+    "channels": 1,
+    "sample_width": 2
+  },
+  "note": "synthetic fixtures for offline FixtureCallerVoice exercise; see ../README.md",
+  "clips": [
+    {
+      "text": "I'd like to book an appointment for Tuesday.",
+      "file": "clip-00.wav",
+      "sha256": "1f322ed7de7f59db29f5b5a04c718fd10e9536b42e9d97d4c956d94f2a8c4b08",
+      "language": "en",
+      "provenance": {
+        "source": "synthetic-watermark-tone",
+        "note": "deterministic watermarked tone from voice_evals.probe.testing; not speech, not model output"
+      }
+    },
+    {
+      "text": "My name is Alex Morgan.",
+      "file": "clip-01.wav",
+      "sha256": "9a742ce55832bc9b098ae45237a57ce74ed690203f0faa38ff8e393d1f38dd74",
+      "language": "en",
+      "provenance": {
+        "source": "synthetic-watermark-tone",
+        "note": "deterministic watermarked tone from voice_evals.probe.testing; not speech, not model output"
+      }
+    },
+    {
+      "text": "Sorry to interrupt. I need 11:00, not ten.",
+      "file": "clip-02.wav",
+      "sha256": "3de63c644f7f78ed97b7462a623f32ce895d1245da09748dcba385deb173866e",
+      "language": "en",
+      "provenance": {
+        "source": "synthetic-watermark-tone",
+        "note": "deterministic watermarked tone from voice_evals.probe.testing; not speech, not model output"
+      }
+    },
+    {
+      "text": "Ich m\u00f6chte einen Termin am Dienstag.",
+      "file": "clip-03.wav",
+      "sha256": "2cb6fdc9f16468a7b21eac7a2fe39a1f8c3613ea05545b699add8fea5c89140c",
+      "language": "de",
+      "provenance": {
+        "source": "synthetic-watermark-tone",
+        "note": "deterministic watermarked tone from voice_evals.probe.testing; not speech, not model output"
+      }
+    },
+    {
+      "text": "Quisiera reservar una cita el martes.",
+      "file": "clip-04.wav",
+      "sha256": "ee638bbe59fef44d91641085c18866618fbde6a812c726ffaaf2919fc6fa6276",
+      "language": "es",
+      "provenance": {
+        "source": "synthetic-watermark-tone",
+        "note": "deterministic watermarked tone from voice_evals.probe.testing; not speech, not model output"
+      }
+    }
+  ]
+}

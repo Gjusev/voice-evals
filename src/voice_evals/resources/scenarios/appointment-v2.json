@@ -1,0 +1,65 @@
+{
+  "schema_version": 2,
+  "name": "appointment-with-correction",
+  "expected_outcome": "booked",
+  "required_facts": ["appointment", "Tuesday", "11:00", "Alex Morgan"],
+  "forbidden_facts": ["free upgrade", "discount"],
+  "seed": 17,
+  "facts": {
+    "caller_name": "Alex Morgan",
+    "preferred_day": "Tuesday",
+    "corrected_time": "11:00"
+  },
+  "steps": [
+    {
+      "id": "request",
+      "intent": "book_appointment",
+      "cue": {"mode": "speak_now"},
+      "utterance": {
+        "text": "I'd like to book an appointment for {{preferred_day}}.",
+        "alternatives": ["Could I arrange a {{preferred_day}} appointment?"],
+        "reveals": ["preferred_day"]
+      }
+    },
+    {
+      "id": "provide_name",
+      "intent": "answer_identity_question",
+      "cue": {"mode": "wait_agent_end", "response_to": "request", "timeout_ms": 15000},
+      "when": {"response_to": "request", "any_text": ["your name", "name should I"]},
+      "on_unmatched": "fail",
+      "utterance": {
+        "text": "My name is {{caller_name}}.",
+        "alternatives": ["Please put it under {{caller_name}}."],
+        "reveals": ["caller_name"]
+      }
+    },
+    {
+      "id": "correct_time",
+      "intent": "correct_appointment_time",
+      "cue": {
+        "mode": "interrupt", "response_to": "provide_name",
+        "after_ms": 600, "timeout_ms": 15000, "if_missed": "fail"
+      },
+      "utterance": {
+        "text": "Sorry to interrupt. I need {{corrected_time}}, not ten.",
+        "alternatives": ["Sorry, could we make that {{corrected_time}} instead?"],
+        "reveals": ["corrected_time"]
+      }
+    },
+    {
+      "id": "confirm",
+      "intent": "confirm_booking",
+      "cue": {"mode": "wait_agent_end", "response_to": "correct_time", "timeout_ms": 15000},
+      "utterance": {
+        "text": "Yes, please confirm the {{preferred_day}} appointment at {{corrected_time}} for {{caller_name}}.",
+        "reveals": ["preferred_day", "corrected_time", "caller_name"]
+      }
+    }
+  ],
+  "outcome_rule": {
+    "source": "final_agent_text",
+    "after_step": "confirm",
+    "all_of": ["appointment", "confirmed", "Tuesday", "11:00", "Alex Morgan"],
+    "value": "booked"
+  }
+}

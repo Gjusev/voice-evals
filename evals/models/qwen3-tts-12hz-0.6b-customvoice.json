@@ -1,0 +1,21 @@
+{
+  "recipe": "qwen3-tts-12hz-0.6b-customvoice",
+  "role": "caller-tts",
+  "model": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+  "model_revision": null,
+  "license": "Apache-2.0",
+  "languages": ["en", "de", "es"],
+  "voice": null,
+  "server": null,
+  "server_digest": null,
+  "quantization": null,
+  "settings": {"sample_rate": 16000, "encoding": "pcm_s16le"},
+  "caller_config": {
+    "kind": "http",
+    "model_id": "Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+    "url_env": "CALLER_TTS_URL"
+  },
+  "status": "tested-offline",
+  "status_note": "HTTP contract verified via httpx.MockTransport in tests/test_callers.py; live synthesis requires an externally hosted service speaking the documented contract and was NOT executed here. Pin model_revision/server/voice/quantization when deployed; null means unknown, not implied.",
+  "provenance": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
+}

@@ -1,0 +1,95 @@
+{
+  "protocol_version": 1,
+  "name": "voice-evals-default-v1",
+  "description": "Reference protocol: JSON+base64 media, independent input/output PCM declarations, explicit response IDs, transcript roles, response completion events. Any agent whose WebSocket speaks this contract works without a custom adapter.",
+  "audio": {
+    "input": {
+      "encoding": "pcm_s16le",
+      "sample_rate": 16000,
+      "channels": 1,
+      "sample_width": 2,
+      "frame_ms": 20,
+      "delivery": "streaming"
+    },
+    "output": {
+      "encoding": "pcm_s16le",
+      "sample_rate": 16000,
+      "channels": 1,
+      "sample_width": 2,
+      "delivery": "streaming"
+    }
+  },
+  "handshake": {
+    "send": {
+      "type": "session_start",
+      "session_id": "{{session_id}}",
+      "audio": {"encoding": "pcm_s16le", "sample_rate": 16000, "channels": 1}
+    },
+    "ready_event": {"type": "session_ready"}
+  },
+  "outbound": {
+    "audio": {
+      "media": "json_base64",
+      "envelope": {
+        "type": "input_audio",
+        "utterance_id": "{{utterance_id}}",
+        "seq": "{{seq}}",
+        "audio": "{{audio_b64}}"
+      }
+    },
+    "end_utterance": {"type": "input_commit", "utterance_id": "{{utterance_id}}"},
+    "cancel": {"type": "cancel_response", "response_id": "{{response_id}}"}
+  },
+  "inbound": {
+    "discriminator": "type",
+    "events": {
+      "session_ready": {"kind": "session_ready"},
+      "response_start": {"kind": "response_start", "selectors": {"response_id": "$.response_id"}},
+      "output_audio": {
+        "kind": "agent_audio",
+        "direction": "agent",
+        "media": "json_base64",
+        "selectors": {"data": "$.audio", "response_id": "$.response_id", "sequence": "$.seq"}
+      },
+      "output_text_delta": {
+        "kind": "agent_text_delta",
+        "selectors": {"text": "$.text", "response_id": "$.response_id"}
+      },
+      "output_text_final": {
+        "kind": "agent_text_final",
+        "selectors": {"text": "$.text", "response_id": "$.response_id"}
+      },
+      "input_transcript_delta": {
+        "kind": "caller_transcript_delta",
+        "selectors": {"text": "$.text", "utterance_id": "$.utterance_id"}
+      },
+      "input_transcript_final": {
+        "kind": "caller_transcript_final",
+        "selectors": {"text": "$.text", "utterance_id": "$.utterance_id"}
+      },
+      "response_done": {"kind": "response_done", "selectors": {"response_id": "$.response_id"}},
+      "outcome": {"kind": "outcome", "selectors": {"value": "$.value"}},
+      "stage": {"kind": "stage", "selectors": {"stage": "$.stage", "response_id": "$.response_id"}},
+      "error": {"kind": "error", "selectors": {"code": "$.code", "message": "$.message"}}
+    }
+  },
+  "auth": {
+    "headers": [
+      {"name": "Authorization", "env": "PROBE_AGENT_API_KEY", "template": "Bearer {{env_value}}"}
+    ]
+  },
+  "capabilities": {
+    "duplex": true,
+    "incremental_output": true,
+    "response_ids": true,
+    "input_transcripts": true,
+    "agent_transcripts": true,
+    "response_end_events": true,
+    "stage_events": false,
+    "explicit_input_commit": true,
+    "cancellation": true,
+    "playback_ack": false,
+    "outcome_events": false,
+    "transcript_semantics": "delta"
+  }
+}

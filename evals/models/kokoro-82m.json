@@ -1,0 +1,12 @@
+{
+  "recipe": "kokoro-82m",
+  "role": "fixture-source",
+  "model": "hexgrad/Kokoro-82M",
+  "model_revision": null,
+  "license": "Apache-2.0 (weights)",
+  "languages": ["en"],
+  "server": null,
+  "status": "pending",
+  "status_note": "Practical source for pregenerated speech fixtures during bundle preparation. Its inference and system dependencies stay outside this harness; no inference was run here.",
+  "provenance": "https://huggingface.co/hexgrad/Kokoro-82M"
+}

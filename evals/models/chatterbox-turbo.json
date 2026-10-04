@@ -1,0 +1,17 @@
+{
+  "recipe": "chatterbox-turbo",
+  "role": "caller-tts",
+  "model": "resemble-ai/chatterbox (Turbo)",
+  "model_revision": null,
+  "license": "MIT (code/weights family; preserve upstream watermarking)",
+  "languages": ["en"],
+  "voice": null,
+  "server": null,
+  "server_digest": null,
+  "quantization": null,
+  "settings": {"sample_rate": 16000, "encoding": "pcm_s16le"},
+  "caller_config": {"kind": "http", "model_id": "chatterbox-turbo", "url_env": "CALLER_TTS_URL"},
+  "status": "pending",
+  "status_note": "Publish as tested only after its adapter smoke check passes against a real deployment. Multilingual Chatterbox variants are a separate recipe.",
+  "provenance": "https://github.com/resemble-ai/chatterbox"
+}

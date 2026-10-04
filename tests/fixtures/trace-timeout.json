@@ -1,0 +1,24 @@
+{
+ "name": "trace-timeout",
+ "note": "normalized trace from a MockTransport session with a virtual clock; simulated latencies, not provider measurements",
+ "session_status": "failed",
+ "status_reason": "response_timeout",
+ "events": [
+  {
+   "kind": "session_ready",
+   "receipt_ns": -27000000,
+   "response_id": null,
+   "utterance_id": null,
+   "text": null,
+   "audio_samples": null
+  },
+  {
+   "kind": "caller_transcript_final",
+   "receipt_ns": 2917000000,
+   "response_id": null,
+   "utterance_id": "utt-request",
+   "text": "Could I arrange a Tuesday appointment?",
+   "audio_samples": null
+  }
+ ]
+}

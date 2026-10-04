@@ -1,0 +1,13 @@
+{
+  "recipe": "voxtral-mini-4b-realtime-2602",
+  "role": "agent-stt",
+  "model": "mistralai/Voxtral-Mini-4B-Realtime-2602",
+  "model_revision": null,
+  "license": "Apache-2.0",
+  "languages": ["en", "de", "es"],
+  "server": null,
+  "server_digest": null,
+  "status": "pending",
+  "status_note": "STT component of an externally hosted open voice-agent stack. It transcribes speech; it is not itself a conversational agent or caller TTS. Its STT output may populate caller ASR only when it is the agent's actual input transcript. No live stack was run here.",
+  "provenance": "https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-2602"
+}
