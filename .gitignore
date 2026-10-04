@@ -11,3 +11,5 @@ results/
 out/
 .venv-verify/
 .DS_Store
+.playwright-mcp/
+.venv-bundlecheck/
