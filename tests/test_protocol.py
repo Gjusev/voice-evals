@@ -1,6 +1,7 @@
 """Protocol map validation, normalization, encoding, and schema parity."""
 
 import base64
+import importlib.resources
 import json
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from voice_evals.probe.models import EventKind
 from voice_evals.probe.scenario import ScenarioScript
 from voice_evals.probe.transports.protocol import ProtocolMap, load_default_protocol_map
 
-RESOURCES = Path(__file__).resolve().parents[1] / "src" / "voice_evals" / "resources"
+RESOURCES = Path(str(importlib.resources.files("voice_evals") / "resources"))
 FORMAT = AudioFormat(sample_rate=16000)
 
 

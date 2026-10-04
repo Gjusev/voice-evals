@@ -1,6 +1,7 @@
 """Recording artifacts: manifest, journal recovery, audio bounds, secrets."""
 
 import asyncio
+import importlib.resources
 import json
 from pathlib import Path
 
@@ -14,7 +15,7 @@ from voice_evals.probe import (
 from voice_evals.probe.clock import VirtualClock
 from voice_evals.probe.recording import read_journal
 
-RESOURCES = Path(__file__).resolve().parents[1] / "src" / "voice_evals" / "resources"
+RESOURCES = Path(str(importlib.resources.files("voice_evals") / "resources"))
 APPOINTMENT = RESOURCES / "scenarios" / "appointment-v2.json"
 
 

@@ -27,7 +27,43 @@ import sys
 from pathlib import Path
 
 WORKING = Path("/kaggle/working")
-BUNDLE = Path("/kaggle/input/voice-evals-v020-offline-bundle")
+
+def locate_bundle() -> Path:
+    """Find the attached offline bundle wherever Kaggle mounted it.
+
+    Observed layouts: the classic /kaggle/input/<slug>/... and the newer
+    /kaggle/input/datasets/<owner>/<slug>/..., with the bundle zip either
+    already extracted (nested one level) or still zipped. A recursive search
+    from /kaggle/input covers all of them; hashes are verified against
+    bundle-manifest.json after extraction, so a wrong directory can never
+    silently install.
+    """
+    import glob
+    import zipfile
+
+    input_root = Path("/kaggle/input")
+    manifests = [
+        Path(p)
+        for p in glob.glob(str(input_root / "**" / "bundle-manifest.json"), recursive=True)
+    ]
+    if manifests:
+        return manifests[0].parent
+    zips = sorted(input_root.rglob("*.zip"))
+    if not zips:
+        listing = sorted(str(p) for p in input_root.rglob("*") if p.is_file())
+        raise SystemExit(
+            "no bundle or zip found under /kaggle/input; attached files: "
+            + "; ".join(listing[:40])
+        )
+    target = Path("/kaggle/working/bundle")
+    if not (target / "bundle-manifest.json").is_file():
+        with zipfile.ZipFile(zips[0]) as archive:
+            archive.extractall(target)
+        print(f"extracted {zips[0].name} -> {target}", flush=True)
+    return target
+
+
+BUNDLE = locate_bundle()
 
 
 def run(cmd: list[str]) -> None:

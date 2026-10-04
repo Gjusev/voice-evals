@@ -1,29 +1,53 @@
+<p align="center">
+  <img src="docs/assets/voice-evals-cover.png" alt="voice-evals: evaluation tools for the whole voice conversation. Replay scoring, live probes and CI gates." width="100%">
+</p>
+
 # voice-evals
 
-**Evaluation harness for voice agents: replay scoring plus a scripted live probe — WER, latency budgets, barge-in behavior and task outcomes, with CI gates.**
+**Reproducible evaluation for voice agents.** Score recorded calls, run scripted conversations over WebSocket, and turn transcription, latency, interruptions and task outcomes into CI gates.
 
-Text-agent evals are everywhere. Voice adds four layers that nobody has open-sourced well: transcription quality under accents and noise, per-stage latency (voice has a hard "feels instant" budget around 800ms), interruption handling, and whether the call actually achieved its goal. `voice-evals` measures them from recorded calls, offline, with zero credentials — and since v0.2 it can also *make* the calls: a deterministic scripted caller speaks to your live agent over its real WebSocket transport, barges in, records everything, and scores it with the same replay evaluator.
+[![PyPI](https://img.shields.io/pypi/v/voice-evals?color=27845a&logo=pypi&logoColor=white)](https://pypi.org/project/voice-evals/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-27845a?logo=python&logoColor=white)](https://pypi.org/project/voice-evals/)
+[![Tests](https://github.com/Gjusev/voice-evals/actions/workflows/test.yml/badge.svg)](https://github.com/Gjusev/voice-evals/actions/workflows/test.yml)
+[![License](https://img.shields.io/badge/License-Apache_2.0-27845a)](LICENSE)
 
-Built by someone who runs a production voice agent ([HeizPro KI](https://github.com/Gjusev), real-time STT/LLM/TTS), not from a spec sheet.
+[Watch the demo](#watch-the-demo) · [Quick start](#quick-start) · [Kaggle notebooks](#reproduce-in-kaggle) · [Live probe](#live-probe) · [Documentation](#documentation)
 
-## What it measures
+A voice agent can produce the right words and still respond too slowly, talk over a caller, or miss a correction. `voice-evals` makes those failures inspectable: a scripted caller talks to your agent, interrupts it, records the session, and exports a dataset that the offline evaluator can score again.
 
-| Layer | Metrics |
-| --- | --- |
-| Transcription | per-call WER (live STT output vs ground truth), mean and max |
-| Latency | end-to-end p50/p95/p99 plus per-stage means: STT, LLM time-to-first-token, TTS time-to-first-audio |
-| Behavior | interruption count, median time until agent audio stops after a barge-in |
-| Outcome | task completion vs expected outcome, required-fact coverage, hallucination rate (forbidden claims) |
+**Start without API keys.** Replay evaluation and the mock probe run offline. Real calls use your agent endpoint and a supported caller voice provider.
 
-## Quick start (replay, no credentials)
+## Watch the demo
+
+https://github.com/user-attachments/assets/3b67eb82-26ce-4247-b652-b0f5b7513b20
+
+**[Download MP4](docs/assets/voice-evals-demo.mp4)** · [Silent animated preview](docs/assets/voice-evals-demo.gif) · [Transcript](docs/demo-transcript.md)
+
+A 22-second walkthrough of the CLI and recording artifacts, playable directly here on GitHub. Enable sound for the music. Demonstration scores come from synthetic calls. [Media credits](docs/assets/README.md#video-credits).
+
+## Choose your starting point
+
+| You have… | Start here | What you get |
+| --- | --- | --- |
+| Recorded transcripts and timings | `voice-eval run calls.jsonl` | Metrics, per-call details and configurable gates |
+| A live WebSocket voice agent | `voice-eval probe scenario.json` | A scripted call, interruption observations and replayable artifacts |
+| No agent or credentials yet | [Offline quick start](#quick-start) or [Kaggle](#reproduce-in-kaggle) | A reproducible harness demonstration |
+
+## Quick start
+
+Python **3.10+**. Clone the repository to get the example datasets, then install the package:
 
 ```bash
-pip install voice-evals
-```
-
-```bash
+git clone https://github.com/Gjusev/voice-evals.git
+cd voice-evals
+python -m pip install voice-evals
 voice-eval run evals/data/demo_calls.jsonl
 ```
+
+If you already have a dataset, installing from PyPI is enough: `voice-eval run calls.jsonl`.
+
+<details>
+<summary>See the three-call demo output</summary>
 
 ```text
 samples=3 failures=0
@@ -31,300 +55,150 @@ wer mean=0.0303 max=0.0909
 task_completion=0.6667
 fact_coverage=0.8333
 hallucination_rate=0.3333
-e2e_ms p50=950.0 p95=1103.0 p99=1118.6
+e2e_ms p50=950.0 p95=1103.0 p99=1116.6
 stage means: e2e_ms=963.3 llm_ttft_ms=330.0 stt_ms=200.0 tts_ttfa_ms=236.7
 interruptions=1 median_barge_in_stop_ms=210.0
+gate: PASSED
 ```
 
-Gate in CI:
+These are synthetic example calls, not provider benchmarks. With no thresholds configured, a passing gate does not imply production readiness. `failures=0` is not a count of successful tasks; task completion is reported separately.
+
+</details>
+
+### Make quality a CI gate
 
 ```bash
-voice-eval run calls.jsonl --max-wer 0.05 --min-task-completion 0.90 --max-e2e-p95-ms 1000
+voice-eval run calls.jsonl --max-wer 0.05 --min-task-completion 0.90 --max-e2e-p95-ms 1000 --json --output result.json
 ```
 
-Exit codes: `0` passed, `1` gate failed, `2` dataset error.
-
-## v0.2: live probe
-
-```bash
-pip install "voice-evals[probe]"   # adds httpx + websockets
-```
-
-The harness becomes a synthetic caller: it TTS-generates caller lines from a
-scenario script (v2 JSON, bundled example:
-[`src/voice_evals/resources/scenarios/appointment-v2.json`](src/voice_evals/resources/scenarios/appointment-v2.json)),
-calls your agent over its real transport, records the session, and scores it
-with the same evaluator. Try the fully offline mock demo (~25s, no
-credentials, no network):
-
-```bash
-make demo-probe
-# or: voice-eval probe src/voice_evals/resources/scenarios/appointment-v2.json \
-#       --mock --output-dir out/probe-demo --max-wer 0.05 --max-barge-in-stop-ms 500
-```
-
-A real call against an agent speaking the bundled reference protocol:
-
-```bash
-export ELEVENLABS_API_KEY=...      # caller TTS
-export ELEVENLABS_VOICE_ID=...     # an API key alone does not identify a voice
-export PROBE_TRANSPORT_URL=wss://your-agent.example.com/voice
-export PROBE_AGENT_API_KEY=...     # agent auth, never the ElevenLabs key
-
-voice-eval probe src/voice_evals/resources/scenarios/appointment-v2.json \
-  --caller elevenlabs --voice-id "$ELEVENLABS_VOICE_ID" \
-  --output-dir out/probe-live --json
-```
-
-Open-model caller instead of ElevenLabs (the model service runs elsewhere; see
-[`examples/open-models/`](examples/open-models/README.md)):
-
-```bash
-export CALLER_TTS_URL=http://your-tts-service:8080/tts
-voice-eval probe scenario.json --caller http \
-  --caller-model Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice \
-  --transport "$PROBE_TRANSPORT_URL" --output-dir out/probe-open
-```
-
-Prepared real speech instead of TTS:
-`--caller fixture --fixture-manifest evals/fixtures/audio/synthetic/manifest.json`.
-
-### Local reference agent (real sockets, no third-party agent needed)
-
-[`examples/reference-agent/`](examples/reference-agent/README.md) is a
-localhost WebSocket agent speaking exactly `default-v1` — scripted policy,
-tone TTS, and three STT modes (`none` = honest NOT SCORED, `watermark` = pairs
-with `--mock`, `scribe` = **real ElevenLabs Scribe STT**). It validates the
-probe's real wire path end to end without any external agent service.
-
-### Live validation performed (2026-10-04, this repository)
-
-All three live layers were exercised and are committed as opt-in tests
-(`VOICE_EVALS_LIVE_TESTS=1` + secrets, never in CI):
-
-| Layer | What ran | Result |
-| --- | --- | --- |
-| Caller TTS | `ElevenLabsCallerVoice` against the real API: native `pcm_16000`/`pcm_24000`, MP3-body rejection, 401-not-retried | 4/4 passed (`tests/integration/test_live_elevenlabs.py`) |
-| Real WebSocket E2E | Full `SessionRunner` over a real socket vs the reference agent (watermark mode) | scored, replay-equal, barge-in observed (`tests/integration/test_live_probe_local_agent.py`) |
-| Full real probe | CLI `voice-eval probe` with the real ElevenLabs caller (`eleven_multilingual_v2`, stock voice Sarah) → real WSS transport → reference agent with real Scribe STT | **completed + scored**: WER **0.1379** (real TTS→STT round trip: Scribe heard "hour" for "instead", dropped punctuation), task 1.0, E2E turn p50 1086ms/p95 2034ms, barge-in stop 232.6ms; exported `calls.jsonl` replays to identical scores; no secret in any artifact |
-
-That WER is a genuine measurement of the ElevenLabs-TTS → Scribe-STT round
-trip through the probe's real wire path; it says nothing about any agent's
-intelligence (the reference agent's dialogue policy is scripted). The
-originally supplied private voice id was not present in the account
-(`voice_not_found`); the documented stock premade voice Sarah
-(`EXAVITQu4vr4xnSDxMaL`) was used instead.
-
-### What the probe records
-
-Every run writes a complete, replayable recording directory:
-
-```text
-out/probe/manifest.json   sanitized manifest: config, chosen alternatives, timings,
-                          interruption observations, provenance, file hashes
-out/probe/events.jsonl    append-only normalized event journal
-out/probe/calls.jsonl     exported v0.1 replay record (empty+marked when not replayable)
-out/probe/result.json     v0.1 result fields + additive "probe" object + gate_passed
-out/probe/audio/caller/*.wav   exactly the bytes sent, per utterance
-out/probe/audio/agent/*.wav    exactly the bytes received, per response
-```
-
-A live session and its exported `calls.jsonl` replay to identical legacy
-scores. Exit codes: `0` observed+scored and gates passed, `1` measured or
-behavioral failure (including NOT SCORED runs with explicit reasons), `2`
-config/transport/provider/recording error.
-
-### Honesty rules baked into the output
-
-- Client-observed events cannot reveal hidden STT/LLM/TTS stages. Legacy
-  `llm_ttft_ms`/`tts_ttfa_ms` are populated **only** when explicit stage events
-  exist; otherwise proxies are reported under separate names and stage fields
-  stay `null` with a recorded reason.
-- STT latency is labeled `client_final_asr` (includes endpointing + network).
-- A barge-in that never confirms a stop is right-censored (`not_stopped`), with
-  a lower bound — never a fabricated duration.
-- Ineligible sessions print **NOT SCORED** with exclusion reasons; placeholder
-  zero-fields are conventions, not measurements.
-- Secrets are resolved at execution time and never serialized: manifests
-  record env variable names, never values or signed URLs.
-- Mock latency is simulated and is never presented as a provider benchmark.
-
-### Scenario v2 in one minute
-
-Four caller turns with a conditional branch and a deliberate interruption
-(full schema: `src/voice_evals/resources/schemas/scenario-v2.schema.json`):
-
-```json
-{"id": "correct_time", "intent": "correct_appointment_time",
- "cue": {"mode": "interrupt", "response_to": "provide_name",
-          "after_ms": 600, "timeout_ms": 15000, "if_missed": "fail"},
- "utterance": {"text": "Sorry to interrupt. I need {{corrected_time}}, not ten.",
-                "alternatives": ["Sorry, could we make that {{corrected_time}} instead?"],
-                "reveals": ["corrected_time"]}}
-```
-
-- Alternatives are chosen by a stable hash of `seed`+step id — deterministic,
-  independent of branch execution order.
-- `{{placeholders}}` must be declared facts, and every substituted fact must be
-  listed in `reveals` (mismatch is a validation error).
-- Branches (`when`/`on_unmatched`) are bounded and deterministic: literal
-  substring predicates over one completed response. No LLM branching in v0.2.
-- `outcome_rule.source: final_agent_text` is an explicit proxy for what the
-  agent *reported* — not evidence a calendar write succeeded.
-
-### Transport: one protocol map, no magic
-
-A WebSocket URL does not specify an audio protocol. The probe speaks any
-endpoint covered by a declarative JSON map (bundled reference:
-[`default-v1.json`](src/voice_evals/resources/protocols/default-v1.json)):
-PCM formats per direction, handshake, outbound envelopes with a fixed
-substitution allowlist, an inbound discriminator with JSON-pointer selectors,
-declared capabilities, and env-referenced auth. Write your own map against
-[`protocol-v1.schema.json`](src/voice_evals/resources/schemas/protocol-v1.schema.json)
-— no Python, Jinja, or scripts are ever evaluated from a map. Native PCM only
-(mono s16le 16/24 kHz): no hidden codecs or resampling; unsupported formats
-fail preflight. "Works with any agent" means any agent whose protocol fits the
-map; a telephony webhook or arbitrary binary protocol needs a future adapter.
-
-## Dataset format (replay)
-
-JSONL, one recorded call per line (JSON arrays also work):
-
-```json
-{
-  "id": "call-001",
-  "scenario": {
-    "name": "book-appointment",
-    "expected_outcome": "booked",
-    "required_facts": ["Tuesday", "appointment"],
-    "forbidden_facts": ["discount"]
-  },
-  "asr_transcript": "what the agent's STT heard",
-  "ground_truth_transcript": "what the caller actually said",
-  "agent_transcript": "everything the agent said",
-  "outcome": "booked",
-  "stage_timings_ms": {"stt_ms": 190, "llm_ttft_ms": 310, "tts_ttfa_ms": 220, "e2e_ms": 820},
-  "interruptions": [{"at_ms": 4200, "agent_stopped_ms": 210}]
-}
-```
-
-Only `id`, `scenario.name`, `scenario.expected_outcome` and `ground_truth_transcript` are required. Everything else scores `n/a` when absent, so you can start with transcripts only and add timings later. v0.2 is fully API- and schema-compatible with v0.1.1; all changes are additive.
-
-A larger frozen regression corpus (123 calls incl. hand-checked WER cases) ships in [`evals/data/`](evals/data/README.md).
+Choose thresholds for your use case. Replay exits with **0** when gates pass, **1** when a gate fails and **2** for a dataset error. See the repository's [CI workflow](.github/workflows/test.yml) for executable examples.
 
 ## Reproduce in Kaggle
 
-[![Kernel A: offline benchmark](https://img.shields.io/badge/Kaggle-Kernel_A_%E2%80%93_offline_benchmark-20BEFF?logo=kaggle)](https://www.kaggle.com/code/gjusev/voice-evals-offline-benchmark)
-[![Kernel B: live probe](https://img.shields.io/badge/Kaggle-Kernel_B_%E2%80%93_live_probe-20BEFF?logo=kaggle)](https://www.kaggle.com/code/gjusev/voice-evals-live-probe)
+| Notebook / kernel | What it exercises | Links |
+| --- | --- | --- |
+| **Offline benchmark** | Pinned wheel bundle, three-call demo, 123-call regression corpus, mock and fixture probes | [Open on Kaggle](https://www.kaggle.com/code/gjusev/voice-evals-offline-benchmark) · [Source](kaggle-kernel/offline/script.py) |
+| **Live probe** | Scripted WSS session with your credentials; a clearly labeled mock run when secrets are absent | [Open on Kaggle](https://www.kaggle.com/code/gjusev/voice-evals-live-probe) · [Source](kaggle-kernel/probe/script.py) |
 
-> Publication pending — the links activate when the kernels and bundle
-> dataset are published with the v0.2.x release.
+The links use the kernel IDs configured in this repository. **Public availability has not been verified**; if a notebook is unavailable, use its local source and the [Kaggle reproduction guide](docs/kaggle.md). The [offline bundle](https://www.kaggle.com/datasets/gjusev/voice-evals-v020-offline-bundle) supplies pinned wheels and checksums.
 
-**Kernel A** ([`kaggle-kernel/offline/`](kaggle-kernel/offline/script.py)) proves
-harness reproducibility with `enable_internet=false`: it installs the exact
-published wheel and pinned dependency wheels from a checksummed Kaggle dataset
-(`--no-index --find-links --require-hashes`; never PyPI at runtime), then
-asserts the unchanged v0.1 demo metrics, the frozen regression corpus with
-hand-checked WERs, a full four-turn mock probe (conditional branch, overlap
-barge-in, artifacts, live-to-replay equality), the fixture-caller path, and
-the offline test suite. Outputs land in `/kaggle/working` with provenance and
-artifact checksums.
+Kernel A is configured with internet disabled. Kernel B needs an accessible WSS endpoint for a live call; localhost on your machine is not reachable from Kaggle. Its latency includes the Kaggle datacenter's network path. Mock timings are simulated.
 
-**Kernel B** ([`kaggle-kernel/probe/`](kaggle-kernel/probe/script.py)) is a live
-diagnostic: with Kaggle Secrets `ELEVENLABS_API_KEY` + `PROBE_TRANSPORT_URL`
-it runs one scripted probe over outbound WSS; with secrets missing it runs the
-full mock session through the same runner/recorder/evaluator and prints only
-the missing secret names — no network attempt. A failed live attempt keeps its
-artifacts and additionally writes a separately named mock diagnostic; the mock
-score is never substituted for the live result. The open-model variant uses
-`CALLER_TTS_URL` with `caller=http` instead of ElevenLabs credentials.
+## What it measures
 
-**Latency location warning:** live Kernel B latency is measured from the
-Kaggle datacenter and includes network transit/RTT and client scheduling. It
-is not directly comparable with local runs; mock latency is simulated and is
-not a provider benchmark.
+| Layer | Measurement | Interpretation |
+| --- | --- | --- |
+| **Transcription** | Per-call WER, mean and maximum | Compares ASR text with a supplied reference; mean WER weights calls equally |
+| **Latency** | E2E p50/p95/p99; available STT, LLM TTFT and TTS TTFA means | Stage timings require explicit observations; missing stages are not inferred |
+| **Interruptions** | Barge-in observations and measured stop time | A stop that is never confirmed is reported as censored |
+| **Task outcome** | Completion, required-fact coverage, forbidden-phrase rate | Deterministic checks against your scenario, not an LLM judge |
 
-Secrets setup: notebook sidebar → Add-ons → Secrets → attach
-`ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` (a stock voice id), and your
-agent's `PROBE_TRANSPORT_URL` (+ optional `PROBE_AGENT_API_KEY`). A service on
-your localhost is not reachable from Kaggle — expose an authenticated public
-WSS endpoint. Your endpoint must match a protocol map; the default map covers
-agents implementing the reference protocol.
+The output field `hallucination_rate` measures calls containing a configured forbidden phrase. It does not detect every possible hallucination. [Read the metric definitions](docs/data-format.md#metric-semantics).
 
-Publishing (from the repository, host-side):
+## How it works
+
+```mermaid
+flowchart LR
+    S[Scenario script] --> C[Caller: TTS or fixtures]
+    C --> P[Live probe]
+    P <-->|WebSocket protocol map| A[Your voice agent]
+    P --> R[Audio + event journal + manifest]
+    R --> D[calls.jsonl]
+    E[Existing recordings] --> D
+    D --> V[Replay evaluator]
+    V --> M[Metrics + CI gates]
+```
+
+**One evaluator, two entry points.** A scored probe exports the same replay format used for offline calls. Replay reproduces the legacy scores from that recording; a new live call can vary with the agent, provider and network.
+
+## Live probe
+
+From the cloned repository, try the four-turn appointment scenario with a conditional branch and deliberate interruption:
 
 ```bash
-KAGGLE_API_TOKEN=... python -m kaggle kernels push -p kaggle-kernel/offline
-KAGGLE_API_TOKEN=... python -m kaggle kernels status gjusev/voice-evals-offline-benchmark
-KAGGLE_API_TOKEN=... python -m kaggle kernels output gjusev/voice-evals-offline-benchmark -p out/kaggle-offline/
-
-KAGGLE_API_TOKEN=... python -m kaggle kernels push -p kaggle-kernel/probe
-KAGGLE_API_TOKEN=... python -m kaggle kernels status gjusev/voice-evals-live-probe
-KAGGLE_API_TOKEN=... python -m kaggle kernels output gjusev/voice-evals-live-probe -p out/kaggle-probe/
+python -m pip install "voice-evals[probe]"
+voice-eval probe src/voice_evals/resources/scenarios/appointment-v2.json --mock --output-dir out/probe-demo --max-wer 0.05 --max-barge-in-stop-ms 500
+voice-eval run out/probe-demo/calls.jsonl
 ```
 
-PowerShell: set the token once with `$env:KAGGLE_API_TOKEN="..."`, then run
-the same commands without the Bash assignment prefix. Forks must change the
-metadata `id` and the commands' owner. `KAGGLE_API_TOKEN` is a publisher
-credential, not a kernel runtime secret. Bundle build details:
-[`kaggle-kernel/bundle/README.md`](kaggle-kernel/bundle/README.md).
+The mock demo takes about 25 seconds and needs no credentials or network. Its timing is simulated.
 
-## Python API
+For a real call, configure `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` and `PROBE_TRANSPORT_URL`, plus `PROBE_AGENT_API_KEY` if your endpoint requires authentication:
 
-```python
-from voice_evals import evaluate, load_dataset
-
-result = evaluate(load_dataset("calls.jsonl"))
-print(result.summary())
-print(result.e2e_p95_ms, result.hallucination_rate)
+```bash
+voice-eval probe src/voice_evals/resources/scenarios/appointment-v2.json --caller elevenlabs --output-dir out/probe-live --json
 ```
 
-Programmatic probe (same machinery as the CLI):
+Your endpoint must match a [protocol map](src/voice_evals/resources/protocols/default-v1.json). The current transport supports mono s16le PCM at 16/24 kHz; arbitrary telephony or binary protocols need an adapter. Start with the [local reference agent](examples/reference-agent/README.md) to exercise real sockets.
 
-```python
-import asyncio
-from pathlib import Path
-from voice_evals.probe import (
-    MockCallerVoice, MockTransport, ProbeConfig, ScenarioScript, SessionRunner,
-)
+### Caller and integration options
 
-async def main() -> None:
-    script = ScenarioScript.load("scenario.json")
-    config = ProbeConfig(environment="mock", output_dir=Path("out/probe"))
-    runner = SessionRunner(caller=MockCallerVoice(), transport=MockTransport(), config=config)
-    session = await runner.run(script, output_dir=config.output_dir)
-    runner.last_report.print_summary()
+<p>
+  <a href="https://www.python.org/"><img src="docs/assets/python.svg" width="28" height="28" alt="Python"></a>&nbsp;&nbsp;
+  <a href="https://www.kaggle.com/code/gjusev/voice-evals-offline-benchmark"><img src="docs/assets/kaggle.svg" width="28" height="28" alt="Kaggle"></a>&nbsp;&nbsp;
+  <a href="https://pypi.org/project/voice-evals/"><img src="docs/assets/pypi.svg" width="28" height="28" alt="PyPI"></a>&nbsp;&nbsp;
+  <a href="https://elevenlabs.io/"><img src="docs/assets/elevenlabs.svg" width="28" height="28" alt="ElevenLabs"></a>&nbsp;&nbsp;
+  <a href="https://github.com/Gjusev/voice-evals"><img src="docs/assets/github.svg" width="28" height="28" alt="GitHub"></a>
+</p>
 
-asyncio.run(main())
+| Caller | Use it for | Setup |
+| --- | --- | --- |
+| Mock | Offline harness checks | `--mock` |
+| Audio fixtures | Prepared caller recordings | `--caller fixture --fixture-manifest …` |
+| ElevenLabs | Hosted caller TTS | `--caller elevenlabs` and provider credentials |
+| HTTP TTS | An externally hosted speech model | `--caller http`, `CALLER_TTS_URL` and a compatible service |
+
+[Open-model examples](examples/open-models/README.md) include Qwen3-TTS, Kokoro and Chatterbox caller profiles, plus a Voxtral STT gateway example. Model services run separately. Logos identify technologies and integrations, not endorsements.
+
+### Inspect the evidence
+
+```text
+out/probe-demo/
+  manifest.json       sanitized config, provenance and file hashes
+  events.jsonl        normalized event journal
+  calls.jsonl         replay dataset for eligible sessions
+  result.json         scores, probe observations and gate result
+  audio/caller/       sent audio, per utterance
+  audio/agent/        received audio, per response
 ```
 
-The base install (jiwer only) imports the whole probe package, runner, mocks
-and fixtures; `httpx`/`websockets` are imported only inside their adapters via
-the `[probe]` extra.
+Ineligible sessions report **NOT SCORED** with reasons. Manifests record credential environment-variable names, not secret values. Missing stage observations stay unavailable; a timed-out interruption is never assigned an invented stop duration.
 
-## Roadmap
+**Recorded live validation:** one ElevenLabs TTS → real WSS → reference-agent Scribe STT session completed with WER **0.1379** and barge-in stop **232.6 ms**. It **failed** its WER gate of 0.10. The reference dialogue policy was scripted, and this single run is transport evidence rather than a model ranking. [Method, latency aggregation and reproduction tests](docs/live-probe.md#recorded-live-validation-2026-10-04).
 
-- Twilio/Telnyx media-stream adapters behind the same transport interface.
-- Dedicated OpenAI Realtime adapter (append/commit/truncate semantics).
-- LLM judge for graded outcomes instead of exact outcome matching.
-- Regression-gate GitHub Action comparing against a committed baseline.
+## Documentation
+
+| Resource | Contents |
+| --- | --- |
+| [Live probe guide](docs/live-probe.md) | Real calls, scenario branches, transport maps, artifacts and scoring eligibility |
+| [Dataset format and Python API](docs/data-format.md) | JSONL schema, metric definitions and programmatic examples |
+| [Kaggle reproduction](docs/kaggle.md) | Secrets, offline bundles, runtime behavior and publishing commands |
+| [Regression corpus](evals/data/README.md) | 123 frozen calls, hand-checked WER cases and dataset limits |
+| [Reference agent](examples/reference-agent/README.md) | Local WebSocket endpoint with scripted policy and STT modes |
+| [Open-model examples](examples/open-models/README.md) | HTTP caller services, model profiles and Voxtral gateway |
 
 ## Development
 
 ```bash
-make install          # editable install incl. probe extra + dev tools
-make test             # offline pytest (default: -m "not live")
-make test-integration # opt-in live tests (VOICE_EVALS_LIVE_TESTS=1 + secrets)
-make lint             # ruff
-make build            # wheel + sdist
-make demo-probe       # offline four-turn mock probe demo
-make kaggle-bundle    # stage the internet-disabled bundle (validation mode)
+uv sync --extra probe
+uv run pytest -q -m "not live"
+uv run ruff check src tests scripts kaggle-kernel examples
+uv build
 ```
 
-Unit tests and CI never call real services. Live integration tests require
-both `VOICE_EVALS_LIVE_TESTS=1` and the relevant secrets, and are additionally
-guarded against running under CI.
+The [Makefile](Makefile) also provides `make demo-probe`, `make test-integration` and `make kaggle-bundle`. Offline tests never call real services. Live integration tests require `VOICE_EVALS_LIVE_TESTS=1` and relevant credentials, and are blocked under CI.
+
+Found an integration gap? [Open an issue](https://github.com/Gjusev/voice-evals/issues) with the protocol, a minimal sanitized example, and the expected behavior.
+
+## Roadmap
+
+- Twilio/Telnyx media-stream adapters.
+- A dedicated OpenAI Realtime adapter.
+- An optional LLM judge for graded outcomes.
+- A GitHub Action for comparison against a committed baseline.
+
+These are planned capabilities, not current integrations.
 
 ## License
 
-Apache 2.0. See [LICENSE](LICENSE).
+[Apache 2.0](LICENSE). Built by [Gjusev](https://github.com/Gjusev).

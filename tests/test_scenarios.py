@@ -1,5 +1,6 @@
 """Scenario v2 parsing, validation, selection, and branch semantics."""
 
+import importlib.resources
 from pathlib import Path
 
 import pytest
@@ -12,7 +13,7 @@ from voice_evals.probe import (
 )
 from voice_evals.probe.scenario import SCHEMA_VERSION
 
-RESOURCES = Path(__file__).resolve().parents[1] / "src" / "voice_evals" / "resources"
+RESOURCES = Path(str(importlib.resources.files("voice_evals") / "resources"))
 APPOINTMENT = RESOURCES / "scenarios" / "appointment-v2.json"
 
 

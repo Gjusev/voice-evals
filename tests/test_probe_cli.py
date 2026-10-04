@@ -1,13 +1,12 @@
 """Probe CLI: mock demo, gates, exit codes, safe errors. No network."""
 
+import importlib.resources
 import json
 from pathlib import Path
 
 from voice_evals.cli import main
 
-SCENARIO = (
-    Path(__file__).resolve().parents[1] / "src" / "voice_evals" / "resources" / "scenarios" / "appointment-v2.json"
-)
+SCENARIO = Path(str(importlib.resources.files("voice_evals") / "resources" / "scenarios" / "appointment-v2.json"))
 
 MINI_SCRIPT = {
     "schema_version": 2,

@@ -1,6 +1,7 @@
 """Runner behavior on mock sessions: overlap, branches, failures, replay."""
 
 import asyncio
+import importlib.resources
 import json
 from pathlib import Path
 
@@ -16,7 +17,7 @@ from voice_evals.probe import (
 )
 from voice_evals.probe.clock import VirtualClock
 
-RESOURCES = Path(__file__).resolve().parents[1] / "src" / "voice_evals" / "resources"
+RESOURCES = Path(str(importlib.resources.files("voice_evals") / "resources"))
 APPOINTMENT = RESOURCES / "scenarios" / "appointment-v2.json"
 
 

@@ -1,0 +1,25 @@
+{
+  "description": "Selected metrics from a previously recorded local live validation; not rerun for the documentation task.",
+  "recorded_validation_date": "2026-10-04",
+  "source_sha256": "35d2809ccad78fd859e52d64b095d73348d37836d02fe4c3867eb0082d2cb293",
+  "setup": "ElevenLabs TTS -> WSS -> scripted reference agent with Scribe STT",
+  "samples": 1,
+  "mean_wer": 0.13793103448275862,
+  "task_completion": 1.0,
+  "median_barge_in_stop_ms": 232.5999,
+  "legacy_call_e2e_p95_ms": 1380.0748,
+  "turn_latency": {
+    "e2e_p50_ms": 1085.62725,
+    "e2e_p95_ms": 2034.06004,
+    "e2e_p99_ms": 2165.5539280000003,
+    "e2e_count": 4
+  },
+  "gate_passed": false,
+  "gate_reasons": [
+    "mean_wer 0.1379 > allowed 0.1000"
+  ],
+  "limits": [
+    "One session, scripted dialogue policy, no model-quality ranking.",
+    "Turn-level and legacy call-level percentiles have different aggregation bases."
+  ]
+}

@@ -39,6 +39,8 @@ PIP_PLATFORMS = [
 LOCK_TARGETS = [
     {"python": "3.10", "tag": "cp310"},
     {"python": "3.11", "tag": "cp311"},
+    {"python": "3.12", "tag": "cp312"},
+    {"python": "3.13", "tag": "cp313"},
 ]
 # The lock covers DEPENDENCIES ONLY: voice-evals itself comes from the
 # verified bundle wheel (not from an index), so resolution cannot see a
