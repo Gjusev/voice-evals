@@ -22,3 +22,24 @@ jobs:
       - run: uv run pytest -q -m "not live"
       - run: uv run voice-eval run evals/data/demo_calls.jsonl --max-wer 0.05 --min-task-completion 0.5
       - run: uv run voice-eval run evals/data/replay_v02.jsonl --max-wer 0.7
+
+  wheel-install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv build
+      - name: Install the built wheel into a clean venv and smoke it
+        run: |
+          uv venv .wheelcheck
+          VIRTUAL_ENV=.wheelcheck uv pip install dist/*.whl
+          .wheelcheck/bin/voice-eval run evals/data/demo_calls.jsonl --max-wer 0.05
+          .wheelcheck/bin/python - <<'EOF'
+          import voice_evals
+          from voice_evals.probe import load_protocol_map, ProbeConfig
+          assert "site-packages" in voice_evals.__file__, voice_evals.__file__
+          assert load_protocol_map(ProbeConfig()).capabilities.duplex
+          print("wheel smoke ok:", voice_evals.__version__)
+          EOF
