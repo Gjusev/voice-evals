@@ -1,6 +1,6 @@
 [project]
 name = "voice-evals"
-version = "0.1.0"
+version = "0.1.1"
 description = "Evaluation harness for voice agents: live WER, latency budgets, barge-in behavior and task outcomes, with CI regression gates."
 readme = "README.md"
 requires-python = ">=3.10"
