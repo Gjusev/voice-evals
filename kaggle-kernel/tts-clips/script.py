@@ -42,9 +42,62 @@ def run(cmd: list[str]) -> None:
         raise SystemExit(f"failed: {' '.join(cmd)}")
 
 
+def try_install(packages: list[str]) -> bool:
+    """Kaggle's pip cannot build some of kokoro's dependency chain on
+    Python 3.13 (misaki[en] -> spacy chain, sdist build failures). This
+    kernel degrades to an honest report instead of erroring: the clips were
+    generated locally with this exact recipe and are committed to the repo.
+    """
+    cmd = [sys.executable, "-m", "pip", "install", "-q", *packages]
+    print(f"$ {' '.join(cmd)}", flush=True)
+    result = subprocess.run(cmd, capture_output=True, text=True, check=False)
+    if result.returncode != 0:
+        print(result.stdout[-1500:])
+        print(result.stderr[-1500:], file=sys.stderr)
+        return False
+    return True
+
+
+def write_environment_report(reason: str) -> None:
+    report = f"""# Open-model clip generation on Kaggle: not reproducible here
+
+**{reason}**
+
+## What happened (2026-10-04, kernel versions 1-8)
+
+1. Qwen3-TTS-12Hz-0.6B requires bfloat16. float16 on the T4 died with a CUDA
+   device-side assert mid-generation, and `device_map=cpu` does not help: the
+   `qwen-tts` package moves its code predictor onto CUDA internally. Kaggle
+   GPU shapes (T4/P100) are pre-Ampere, no bf16.
+2. Kokoro-82M installs only with `--no-deps` (it pins `transformers==4.12.2`,
+   which has no Python 3.13 wheels); its `misaki[en]` G2P dependency chain
+   fails to build from source under Kaggle's pip on Python 3.13.
+
+## Where the clips actually are
+
+Generated locally on CPU float32 with the pinned recipe in
+`evals/fixtures/audio/open-models/generate.py` (repository
+github.com/Gjusev/voice-evals): 3 en (af_heart) + 2 es (ef_dora) at native
+24 kHz, checksummed manifest with pinned Kokoro revision. German stays
+pending bf16 hardware. Full accounts:
+`evals/models/qwen3-tts-12hz-0.6b-customvoice.json` and
+`evals/models/kokoro-82m.json`.
+"""
+    target = WORKING / "GENERATION-REPORT.md"
+    target.write_text(report, encoding="utf-8")
+    print(f"wrote {target}", flush=True)
+
+
 def main() -> int:
     print("=== voice-evals open-model clips (Kokoro-82M, CPU float32) ===", flush=True)
-    run([sys.executable, "-m", "pip", "install", "-q", "kokoro", "soundfile"])
+    if not try_install(["--no-deps", "kokoro"]) or not try_install(
+        ["misaki[en]", "loguru", "transformers", "soundfile"]
+    ):
+        write_environment_report(
+            "The Kokoro dependency chain does not install on this Kaggle runtime."
+        )
+        print("KERNEL RESULT: environment cannot build the TTS stack; see GENERATION-REPORT.md", flush=True)
+        return 0
 
     revision = None
     try:
