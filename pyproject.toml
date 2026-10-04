@@ -1,0 +1,55 @@
+[project]
+name = "voice-evals"
+version = "0.1.0"
+description = "Evaluation harness for voice agents: live WER, latency budgets, barge-in behavior and task outcomes, with CI regression gates."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{ name = "Gjusev" }]
+keywords = [
+  "voice-agents",
+  "speech",
+  "wer",
+  "latency",
+  "evaluation",
+  "llm",
+  "stt",
+  "tts",
+  "ci",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Quality Assurance",
+  "Typing :: Typed",
+]
+dependencies = ["jiwer>=3.0"]
+
+[project.urls]
+Homepage = "https://github.com/Gjusev/voice-evals"
+Repository = "https://github.com/Gjusev/voice-evals"
+Changelog = "https://github.com/Gjusev/voice-evals/releases"
+
+[project.scripts]
+voice-eval = "voice_evals.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/voice_evals"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
