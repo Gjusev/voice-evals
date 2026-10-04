@@ -1,6 +1,6 @@
-%% Render: npx --yes --package @mermaid-js/mermaid-cli@12.0.0 mmdc -i docs/assets/evaluation-flow.mmd -o docs/assets/evaluation-flow.svg -b white
+%% Render: npx --yes --package @mermaid-js/mermaid-cli@12.0.0 mmdc -i docs/assets/evaluation-flow.mmd -o docs/assets/evaluation-flow.svg -b white --no-font-embed
 %% Keep HTML labels disabled so the SVG works when embedded as an image.
-%%{init: {"theme": "base", "htmlLabels": false, "themeVariables": {"fontFamily": "Arial, sans-serif", "fontSize": "16px", "primaryColor": "#edf8f2", "primaryTextColor": "#172b23", "primaryBorderColor": "#27845a", "lineColor": "#53695f", "edgeLabelBackground": "#ffffff", "background": "#ffffff"}, "flowchart": {"htmlLabels": false, "curve": "linear", "nodeSpacing": 24, "rankSpacing": 34}}}%%
+%%{init: {"theme": "base", "htmlLabels": false, "fontFamily": "Arial, sans-serif", "look": "classic", "themeVariables": {"fontFamily": "Arial, sans-serif", "fontSize": "16px", "primaryColor": "#edf8f2", "primaryTextColor": "#172b23", "primaryBorderColor": "#27845a", "lineColor": "#53695f", "edgeLabelBackground": "#ffffff", "background": "#ffffff"}, "flowchart": {"htmlLabels": false, "curve": "linear", "nodeSpacing": 24, "rankSpacing": 34}}}%%
 flowchart TB
     S["Scenario script"] --> C["Caller: TTS or fixtures"]
     C --> P["Live probe"]

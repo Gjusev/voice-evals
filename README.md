@@ -104,7 +104,7 @@ The output field `hallucination_rate` measures calls containing a configured for
 
 ## How it works
 
-![Voice evaluation workflow: a scripted caller connects to your voice agent through a live probe. Recording artifacts or existing recordings supply calls.jsonl to the replay evaluator, which produces metrics and CI gates.](docs/assets/evaluation-flow.svg)
+<img src="docs/assets/evaluation-flow.svg" width="560" alt="Voice evaluation workflow: a scripted caller connects to your voice agent through a live probe. Recording artifacts or existing recordings supply calls.jsonl to the replay evaluator, which produces metrics and CI gates.">
 
 [View full-size diagram](docs/assets/evaluation-flow.svg) · [Mermaid source](docs/assets/evaluation-flow.mmd)
 

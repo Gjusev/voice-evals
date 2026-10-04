@@ -13,7 +13,7 @@ The generated English campaign images are included in [`social/`](social/): [Git
 Regenerate it from the repository root:
 
 ```bash
-npx --yes --package @mermaid-js/mermaid-cli@12.0.0 mmdc -i docs/assets/evaluation-flow.mmd -o docs/assets/evaluation-flow.svg -b white
+npx --yes --package @mermaid-js/mermaid-cli@12.0.0 mmdc -i docs/assets/evaluation-flow.mmd -o docs/assets/evaluation-flow.svg -b white --no-font-embed
 ```
 
 ## Video credits
