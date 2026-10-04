@@ -6,6 +6,16 @@ The Python, Kaggle, PyPI, ElevenLabs and GitHub SVGs are sourced from [Simple Ic
 
 The generated English campaign images are included in [`social/`](social/): [GitHub social preview](social/github-social-preview.png), [LinkedIn launch image](social/linkedin-launch.png) and [DEV article cover](social/devto-cover.png). The social preview is ready to upload in repository settings; committing it does not change that setting. Publication drafts remain local under the ignored `out/launch-kit/` directory. Logo SVGs use a graphite background for readable contrast in GitHub's light and dark themes.
 
+## Workflow diagram
+
+[`evaluation-flow.svg`](evaluation-flow.svg) is rendered from [`evaluation-flow.mmd`](evaluation-flow.mmd). The vertical layout fits the README column, and embedding the SVG avoids GitHub's Mermaid viewer controls overlapping the diagram. Labels use SVG text instead of HTML for image compatibility. A white background preserves contrast in both GitHub themes.
+
+Regenerate it from the repository root:
+
+```bash
+npx --yes --package @mermaid-js/mermaid-cli@12.0.0 mmdc -i docs/assets/evaluation-flow.mmd -o docs/assets/evaluation-flow.svg -b white
+```
+
 ## Video credits
 
 `voice-evals-demo.mp4` is a 22-second, 1280 × 720, 30 fps H.264/AAC launch film authored with [brag](https://github.com/latent-spaces/brag) and [Hyperframes](https://github.com/heygen-com/hyperframes). The GIF is a silent 800-pixel-wide preview. The poster is the settled end card at 20 seconds, also baked into frame zero of the MP4.

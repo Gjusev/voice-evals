@@ -1,0 +1,116 @@
+{
+  "format": {
+    "encoding": "pcm_s16le",
+    "sample_rate": 16000,
+    "channels": 1,
+    "sample_width": 2
+  },
+  "note": "multilingual real-speech caller fixtures; per-clip provenance is authoritative",
+  "clips": [
+    {
+      "text": "I'd like to book an appointment for Tuesday.",
+      "file": "en-request.wav",
+      "sha256": "05a0615fcb4b331a6775e568c6fdde19c3130028e11c1c5d2f7981966a1e5dc6",
+      "language": "en",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:04+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "My name is Alex Morgan.",
+      "file": "en-name.wav",
+      "sha256": "a6b986ddd2c54e5623f85412492e2f139b9bb195686f9bfa2d8db3b982267689",
+      "language": "en",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:05+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "Sorry, could we make that 11:00 instead?",
+      "file": "en-correct.wav",
+      "sha256": "ce7751b6eaab4dc118a896190b1f19a5fbaa91fc787464a787a133b306c3dfb4",
+      "language": "en",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:05+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "Ich möchte einen Termin am Dienstag.",
+      "file": "de-request.wav",
+      "sha256": "bd7a2ff1a9a0668596b533ea685424eb4f491b02f2c1dd212a6dace9f5ae25ed",
+      "language": "de",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:06+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "Mein Name ist Alex Morgan.",
+      "file": "de-name.wav",
+      "sha256": "1259e8cdecc038d708b75155e2736094751f8e305d8a304c7e0607139bc3c0e0",
+      "language": "de",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:07+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "Quisiera reservar una cita el martes.",
+      "file": "es-request.wav",
+      "sha256": "dfaa3861bc34f1e931a4452dbb893881630509ce29ff1421c2ea5a4b4b481b96",
+      "language": "es",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:09+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    },
+    {
+      "text": "Me llamo Alex Morgan.",
+      "file": "es-name.wav",
+      "sha256": "121906f46a6a147c4239757ff9499cf7cee62dd83ab91af9468f7fabd9959c04",
+      "language": "es",
+      "provenance": {
+        "engine": "elevenlabs",
+        "model": "eleven_multilingual_v2",
+        "voice": "EXAVITQu4vr4xnSDxMaL",
+        "generated_utc": "2026-10-04T18:51:12+00:00",
+        "sample_rate": 16000,
+        "encoding": "pcm_s16le",
+        "note": "real speech from hosted ElevenLabs TTS; NOT open-model output. Open-model clips (Qwen3-TTS/Kokoro) remain pending model serving."
+      }
+    }
+  ]
+}

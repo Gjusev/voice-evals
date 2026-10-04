@@ -15,13 +15,13 @@
 
 A voice agent can produce the right words and still respond too slowly, talk over a caller, or miss a correction. `voice-evals` makes those failures inspectable: a scripted caller talks to your agent, interrupts it, records the session, and exports a dataset that the offline evaluator can score again.
 
-**Start without API keys.** Replay evaluation and the mock probe run offline. Real calls use your agent endpoint and a supported caller voice provider.
+**Start without API keys.** Replay evaluation and the mock probe run offline. Real calls need your agent's endpoint and a caller TTS provider.
 
 ## Watch the demo
 
 ![Animated 22-second voice-evals demo showing replay scoring, CI gates and recording artifacts.](docs/assets/voice-evals-demo.gif)
 
-The demo loops automatically without sound. Demonstration scores come from synthetic calls. [Transcript](docs/demo-transcript.md) · [Download MP4 with sound](docs/assets/voice-evals-demo.mp4) · [Media credits](docs/assets/README.md#video-credits).
+The demo loops automatically without sound. The scores in it come from synthetic calls. [Transcript](docs/demo-transcript.md) · [Download MP4 with sound](docs/assets/voice-evals-demo.mp4) · [Media credits](docs/assets/README.md#video-credits).
 
 <details>
 <summary>Play the full-quality video with sound</summary>
@@ -38,7 +38,7 @@ Press play and enable sound for the music.
 | --- | --- | --- |
 | Recorded transcripts and timings | `voice-eval run calls.jsonl` | Metrics, per-call details and configurable gates |
 | A live WebSocket voice agent | `voice-eval probe scenario.json` | A scripted call, interruption observations and replayable artifacts |
-| No agent or credentials yet | [Offline quick start](#quick-start) or [Kaggle](#reproduce-in-kaggle) | A reproducible harness demonstration |
+| No agent or credentials yet | [Offline quick start](#quick-start) or [Kaggle](#reproduce-in-kaggle) | A complete offline run you can reproduce yourself |
 
 ## Quick start
 
@@ -78,7 +78,7 @@ These are synthetic example calls, not provider benchmarks. With no thresholds c
 voice-eval run calls.jsonl --max-wer 0.05 --min-task-completion 0.90 --max-e2e-p95-ms 1000 --json --output result.json
 ```
 
-Choose thresholds for your use case. Replay exits with **0** when gates pass, **1** when a gate fails and **2** for a dataset error. See the repository's [CI workflow](.github/workflows/test.yml) for executable examples.
+Pick thresholds that fit your use case. Replay exits with **0** when the gates pass, **1** when one fails, and **2** on a dataset error. See the repository's [CI workflow](.github/workflows/test.yml) for executable examples.
 
 ## Reproduce in Kaggle
 
@@ -87,9 +87,9 @@ Choose thresholds for your use case. Replay exits with **0** when gates pass, **
 | **Offline benchmark** | Pinned wheel bundle, three-call demo, 123-call regression corpus, mock and fixture probes | [Open on Kaggle](https://www.kaggle.com/code/gjusev/voice-evals-offline-benchmark) · [Source](kaggle-kernel/offline/script.py) |
 | **Live probe** | Scripted WSS session with your credentials; a clearly labeled mock run when secrets are absent | [Open on Kaggle](https://www.kaggle.com/code/gjusev/voice-evals-live-probe) · [Source](kaggle-kernel/probe/script.py) |
 
-The links use the kernel IDs configured in this repository. **Public availability has not been verified**; if a notebook is unavailable, use its local source and the [Kaggle reproduction guide](docs/kaggle.md). The [offline bundle](https://www.kaggle.com/datasets/gjusev/voice-evals-v020-offline-bundle) supplies pinned wheels and checksums.
+Both notebooks are published and verified. The offline kernel passed its full check suite with internet disabled on 2026-10-04, and the live kernel completed its no-secrets mock path. If a notebook is unavailable to you, its local source and the [Kaggle reproduction guide](docs/kaggle.md) describe the same steps. The [offline bundle](https://www.kaggle.com/datasets/gjusev/voice-evals-v020-offline-bundle) supplies pinned wheels and checksums.
 
-Kernel A is configured with internet disabled. Kernel B needs an accessible WSS endpoint for a live call; localhost on your machine is not reachable from Kaggle. Its latency includes the Kaggle datacenter's network path. Mock timings are simulated.
+The offline kernel runs with internet disabled. The live kernel needs an externally reachable WSS endpoint for a live call; localhost on your machine is not reachable from Kaggle. Its latency numbers include the Kaggle datacenter's network path, and its mock timings are simulated.
 
 ## What it measures
 
@@ -104,17 +104,9 @@ The output field `hallucination_rate` measures calls containing a configured for
 
 ## How it works
 
-```mermaid
-flowchart LR
-    S[Scenario script] --> C[Caller: TTS or fixtures]
-    C --> P[Live probe]
-    P <-->|WebSocket protocol map| A[Your voice agent]
-    P --> R[Audio + event journal + manifest]
-    R --> D[calls.jsonl]
-    E[Existing recordings] --> D
-    D --> V[Replay evaluator]
-    V --> M[Metrics + CI gates]
-```
+![Voice evaluation workflow: a scripted caller connects to your voice agent through a live probe. Recording artifacts or existing recordings supply calls.jsonl to the replay evaluator, which produces metrics and CI gates.](docs/assets/evaluation-flow.svg)
+
+[View full-size diagram](docs/assets/evaluation-flow.svg) · [Mermaid source](docs/assets/evaluation-flow.mmd)
 
 **One evaluator, two entry points.** A scored probe exports the same replay format used for offline calls. Replay reproduces the legacy scores from that recording; a new live call can vary with the agent, provider and network.
 
