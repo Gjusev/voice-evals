@@ -15,6 +15,8 @@
 
 A voice agent can produce the right words and still respond too slowly, talk over a caller, or miss a correction. `voice-evals` makes those failures inspectable: a scripted caller talks to your agent, interrupts it, records the session, and exports a dataset that the offline evaluator can score again.
 
+**Why it exists.** I'm building a voice agent as a hobby project and couldn't find an open-source harness for the voice side: transcription under real speech, per-stage latency, interruptions, and whether the call achieved its goal. voice-evals is the harness that project needed.
+
 **Start without API keys.** Replay evaluation and the mock probe run offline. Real calls need your agent's endpoint and a caller TTS provider.
 
 ## Watch the demo
