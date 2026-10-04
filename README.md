@@ -15,7 +15,7 @@
 
 A voice agent can produce the right words and still respond too slowly, talk over a caller, or miss a correction. `voice-evals` makes those failures inspectable: a scripted caller talks to your agent, interrupts it, records the session, and exports a dataset that the offline evaluator can score again.
 
-**Why it exists.** I'm building a voice agent as a hobby project and couldn't find an open-source harness for the voice side: transcription under real speech, per-stage latency, interruptions, and whether the call achieved its goal. voice-evals is the harness that project needed.
+**Why it exists.** I'm building a voice agent as a hobby project and wanted exactly this combination: deterministic scoring (jiwer WER, exact outcome matching, no LLM judge), per-stage latency budgets, barge-in stop-time measurement, CI gates, and a probe that talks to any WebSocket agent through a declarative protocol map instead of one framework's transport. Open-source voice evals exist, Pipecat ships evals for its own transport and ServiceNow's EVA is an enterprise benchmark suite, but none matched that trade-off. voice-evals is the harness that project needed.
 
 **Start without API keys.** Replay evaluation and the mock probe run offline. Real calls need your agent's endpoint and a caller TTS provider.
 
